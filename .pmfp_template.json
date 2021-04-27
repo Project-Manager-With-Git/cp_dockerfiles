@@ -1,0 +1,55 @@
+{
+    "description": "各种语言不同需求的dockerfile模板",
+    "author": "hsz",
+    "template_type": "components",
+    "template_keys": {
+        "cross_compiling": {
+            "description": "交叉编译",
+            "default": "--platform=$TARGETPLATFORM "
+        },
+        "app_name": {
+            "description": "服务应用名,默认为项目名称",
+            "default": "{{ project_name }}"
+        },
+        "python_version": {
+            "description": "python版本",
+            "default": "{{ python_version }}"
+        },
+        "golang_version": {
+            "description": "golang版本",
+            "default": "{{ golang_version }}"
+        }
+    },
+    "components": {
+        "python_ext_dockerfile": {
+            "source": "python_ext_dockerfile.jinja",
+            "description": "python有c扩展依赖使用这个组件",
+            "default_path": "dockerfile"
+        },
+        "python_pure_dockerfile": {
+            "source": "python_pure_dockerfile.jinja",
+            "description": "python有c扩展依赖但依然希望打包项目源码为pyz使用这个组件",
+            "default_path": "dockerfile"
+        },
+        "python_singal_dockerfile": {
+            "source": "python_singal_dockerfile.jinja",
+            "description": "python没有c扩展依赖且希望打包项目源码为pyz使用这个组件",
+            "default_path": "dockerfile"
+        },
+        "go_ext_dockerfile": {
+            "source": "go_ext_dockerfile.jinja",
+            "description": "golang有cgo依赖的情况下使用",
+            "default_path": "dockerfile"
+        },
+        "go_pure_dockerfile": {
+            "source": "go_pure_dockerfile.jinja",
+            "description": "golang没有cgo依赖的情况下使用",
+            "default_path": "dockerfile"
+        },
+        "go_pure_alpine_dockerfile": {
+            "source": "go_pure_alpine_dockerfile.jinja",
+            "description": "olang没有cgo依赖但需要alpine的情况下使用",
+            "default_path": "dockerfile"
+        }
+    }
+}
