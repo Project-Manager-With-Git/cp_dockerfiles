@@ -36,6 +36,16 @@
             "description": "python没有c扩展依赖且希望打包项目源码为pyz使用这个组件",
             "default_path": "dockerfile"
         },
+        "pypy_pure_dockerfile": {
+            "source": "python_pure_dockerfile.jinja",
+            "description": "python有c扩展依赖但依然希望打包项目源码为pyz使用这个组件",
+            "default_path": "dockerfile"
+        },
+        "pypy_singal_dockerfile": {
+            "source": "python_singal_dockerfile.jinja",
+            "description": "python没有c扩展依赖且希望打包项目源码为pyz使用这个组件",
+            "default_path": "dockerfile"
+        },
         "go_ext_dockerfile": {
             "source": "go_ext_dockerfile.jinja",
             "description": "golang有cgo依赖的情况下使用",
