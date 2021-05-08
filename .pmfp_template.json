@@ -21,29 +21,34 @@
         }
     },
     "components": {
-        "python_ext_dockerfile": {
-            "source": "python_ext_dockerfile.jinja",
-            "description": "python有c扩展依赖使用这个组件",
+        "python_allinone_ext_dockerfile": {
+            "source": "python_allinone_ext_dockerfile.jinja",
+            "description": "python有c扩展依赖且希望将依赖和源码打包到一个文件夹使用这个组件",
             "default_path": "dockerfile"
         },
-        "python_pure_dockerfile": {
-            "source": "python_pure_dockerfile.jinja",
+        "python_pyz_ext_dockerfile": {
+            "source": "python_pyz_ext_dockerfile.jinja.jinja",
             "description": "python有c扩展依赖但依然希望打包项目源码为pyz使用这个组件",
             "default_path": "dockerfile"
         },
-        "python_singal_dockerfile": {
-            "source": "python_singal_dockerfile.jinja",
-            "description": "python没有c扩展依赖且希望打包项目源码为pyz使用这个组件",
+        "python_pyz_allinone_dockerfile": {
+            "source": "python_pyz_allinone_dockerfile.jinja",
+            "description": "python没有c扩展依赖且希望打包项目源码和所有依赖为一个pyz使用这个组件",
             "default_path": "dockerfile"
         },
-        "pypy_pure_dockerfile": {
-            "source": "python_pure_dockerfile.jinja",
-            "description": "python有c扩展依赖但依然希望打包项目源码为pyz使用这个组件",
+        "python_pyz_dockerfile": {
+            "source": "python_pyz_dockerfile.jinja",
+            "description": "python没有c扩展依赖且希望打包项目源码为一个pyz使用这个组件",
             "default_path": "dockerfile"
         },
-        "pypy_singal_dockerfile": {
-            "source": "python_singal_dockerfile.jinja",
-            "description": "python没有c扩展依赖且希望打包项目源码为pyz使用这个组件",
+        "pypy_pyz_dockerfile": {
+            "source": "pypy_pyz_dockerfile.jinja",
+            "description": "python希望打包项目源码为pyz且使用pypy执行使用这个组件",
+            "default_path": "dockerfile"
+        },
+        "pypy_pyz_allinone_dockerfile": {
+            "source": "pypy_pyz_allinone_dockerfile.jinja",
+            "description": "python没有c扩展依赖且希望打包项目源码和依赖到一个pyz且使用pypy执行使用这个组件",
             "default_path": "dockerfile"
         },
         "go_ext_dockerfile": {
