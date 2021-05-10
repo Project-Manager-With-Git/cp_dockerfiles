@@ -27,7 +27,7 @@
             "default_path": "dockerfile"
         },
         "python_pyz_ext_dockerfile": {
-            "source": "python_pyz_ext_dockerfile.jinja.jinja",
+            "source": "python_pyz_ext_dockerfile.jinja",
             "description": "python有c扩展依赖但依然希望打包项目源码为pyz使用这个组件",
             "default_path": "dockerfile"
         },
