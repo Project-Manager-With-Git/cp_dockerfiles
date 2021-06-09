@@ -77,7 +77,7 @@
             "default_path": "dockerfile"
         },
         "go_http_pure_dockerfile": {
-            "source": "go/http/ext_dockerfile.jinja",
+            "source": "go/http/pure_dockerfile.jinja",
             "description": "golang没有cgo依赖且需要使用curl做健康检查的镜像",
             "default_path": "dockerfile"
         }
