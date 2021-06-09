@@ -41,6 +41,11 @@
             "description": "python没有c扩展依赖且希望打包项目源码为一个pyz使用这个组件",
             "default_path": "dockerfile"
         },
+        "python_http_ext_dockerfile": {
+            "source": "python/http/ext_dockerfile.jinja",
+            "description": "python有c扩展的http服务dockerfile,会暴露5000端口并用curl对/ping接口实行健康检查",
+            "default_path": "dockerfile"
+        },
         "pypy_pyz_dockerfile": {
             "source": "pypy/pyz_dockerfile.jinja",
             "description": "python希望打包项目源码为pyz且使用pypy执行使用这个组件",
@@ -73,12 +78,12 @@
         },
         "go_http_ext_dockerfile": {
             "source": "go/http/ext_dockerfile.jinja",
-            "description": "golang有cgo依赖且需要使用curl做健康检查的镜像",
+            "description": "golang有cgo依赖时用的dockerflie,会暴露5000端口并用curl对/ping接口实行健康检查",
             "default_path": "dockerfile"
         },
         "go_http_pure_dockerfile": {
             "source": "go/http/pure_dockerfile.jinja",
-            "description": "golang没有cgo依赖且需要使用curl做健康检查的镜像",
+            "description": "golang没有cgo依赖时用的dockerflie,会暴露5000端口并用curl对/ping接口实行健康检查",
             "default_path": "dockerfile"
         }
     }
