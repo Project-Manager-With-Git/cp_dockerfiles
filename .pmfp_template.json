@@ -52,18 +52,33 @@
             "default_path": "dockerfile"
         },
         "go_ext_dockerfile": {
-            "source": "go_ext_dockerfile.jinja",
+            "source": "go/ext_dockerfile.jinja",
             "description": "golang有cgo依赖的情况下使用",
             "default_path": "dockerfile"
         },
         "go_pure_dockerfile": {
-            "source": "go_pure_dockerfile.jinja",
+            "source": "go/pure_dockerfile.jinja",
             "description": "golang没有cgo依赖的情况下使用",
             "default_path": "dockerfile"
         },
+        "go_ext_alpine_dockerfile": {
+            "source": "go/ext_alpine_dockerfile.jinja",
+            "description": "golang有cgo依赖但需要alpine的情况下使用",
+            "default_path": "dockerfile"
+        },
         "go_pure_alpine_dockerfile": {
-            "source": "go_pure_alpine_dockerfile.jinja",
-            "description": "olang没有cgo依赖但需要alpine的情况下使用",
+            "source": "go/pure_alpine_dockerfile.jinja",
+            "description": "golang没有cgo依赖但需要alpine的情况下使用",
+            "default_path": "dockerfile"
+        },
+        "go_http_ext_dockerfile": {
+            "source": "go/http/ext_dockerfile.jinja",
+            "description": "golang有cgo依赖且需要使用curl做健康检查的镜像",
+            "default_path": "dockerfile"
+        },
+        "go_http_pure_dockerfile": {
+            "source": "go/http/ext_dockerfile.jinja",
+            "description": "golang没有cgo依赖且需要使用curl做健康检查的镜像",
             "default_path": "dockerfile"
         }
     }
