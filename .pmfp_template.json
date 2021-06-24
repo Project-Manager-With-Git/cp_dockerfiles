@@ -85,6 +85,16 @@
             "source": "go/http/pure_dockerfile.jinja",
             "description": "golang没有cgo依赖时用的dockerflie,会暴露5000端口并用curl对/ping接口实行健康检查",
             "default_path": "dockerfile"
+        },
+        "go_grpc_ext_dockerfile": {
+            "source": "go/grpc/ext_dockerfile.jinja",
+            "description": "golang有cgo依赖时用的dockerflie,会暴露5000端口并用grpc_health_probe对health接口实行健康检查",
+            "default_path": "dockerfile"
+        },
+        "go_grpc_pure_dockerfile": {
+            "source": "go/grpc/pure_dockerfile.jinja",
+            "description": "golang没有cgo依赖时用的dockerflie,会暴露5000端口并用grpc_health_probe对health接口实行健康检查",
+            "default_path": "dockerfile"
         }
     }
 }

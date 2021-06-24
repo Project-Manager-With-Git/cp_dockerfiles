@@ -18,14 +18,13 @@ RUN go build -ldflags "-s -w" -o {{ app_name }}-go {{ app_name }}.go
 
 # 直接使用可执行文件构造镜像
 FROM {{ cross_compiling }}debian:buster-slim as build_img
-# 安装curl
-RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
-RUN apt update -y && apt install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
 # 部署可执行文件
+COPY --from=build_bin /go/bin/grpc_health_probe .
+RUN chmod +x /grpc_health_probe
 COPY --from=build_bin /code/{{ app_name }}-go .
 RUN chmod +x /{{ app_name }}-go
 EXPOSE 5000
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "curl","-f","http://localhost:5000/ping" ]
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "grpc_health_probe","-addr=:5000" ]
 ENTRYPOINT [ "/{{ app_name }}-go"]
 
 
@@ -44,8 +43,10 @@ FROM {{ cross_compiling }}debian:buster-slim as build_upximg
 RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 RUN apt update -y && apt install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
 # 部署可执行文件
+COPY --from=build_bin /go/bin/grpc_health_probe .
+RUN chmod +x /grpc_health_probe
 COPY --from=upx /code/{{ app_name }} .
 RUN chmod +x /{{ app_name }}
 EXPOSE 5000
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "curl","-f","http://localhost:5000/ping" ]
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "grpc_health_probe","-addr=:5000" ]
 ENTRYPOINT [ "/{{ app_name }}"]
