@@ -46,6 +46,11 @@
             "description": "python有c扩展的http服务dockerfile,会暴露5000端口并用curl对/ping接口实行健康检查",
             "default_path": "dockerfile"
         },
+        "python_grpc_gen_dockerfile": {
+            "source": "python/grpc/gen_dockerfile.jinja",
+            "description": "python构造grpc时用的dockerflie,会暴露5000端口并用grpc_health_probe对health接口实行健康检查",
+            "default_path": "dockerfile"
+        },
         "pypy_pyz_dockerfile": {
             "source": "pypy/pyz_dockerfile.jinja",
             "description": "python希望打包项目源码为pyz且使用pypy执行使用这个组件",
