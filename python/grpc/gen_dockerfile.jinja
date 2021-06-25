@@ -8,22 +8,22 @@ RUN mkdir /code/{{ app_name }}
 COPY requirements.txt /code/requirements.txt
 RUN python -m pip --no-cache-dir install -r requirements.txt --target {{ app_name }}
 
-FROM {{ cross_compiling }}golang:latest-alpine as build_grpc-health-probe
+FROM {{ cross_compiling }}golang:buster as build_grpc-health-probe
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.io
 # 停用cgo
 ENV CGO_ENABLED=0
-# 安装grpc_health_probe
+# 安装grpc-health-probe
 RUN go get github.com/grpc-ecosystem/grpc-health-probe
 
 FROM {{ cross_compiling }}python:{{ python_version }}-slim-buster as build_img
 # 打包镜像
-COPY --from=build_grpc-health-probe /go/bin/grpc_health_probe /code
-RUN chmod +x /code/grpc_health_probe
+COPY --from=build_grpc-health-probe /go/bin/grpc-health-probe /code
+RUN chmod +x /code/grpc-health-probe
 COPY --from=install_requirements /code/{{ app_name }} /code/{{ app_name }}/
 # 复制源文件
 COPY {{ app_name }} /code/{{ app_name }}/
 WORKDIR /code
 EXPOSE 5000
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "./grpc_health_probe","-addr=:5000" ]
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "./grpc-health-probe","-addr=:5000" ]
 ENTRYPOINT ["python", "{{ app_name }}", "serv"]

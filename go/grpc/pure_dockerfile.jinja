@@ -4,7 +4,7 @@ ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.io
 # 停用cgo
 ENV CGO_ENABLED=0
-# 安装grpc_health_probe
+# 安装grpc-health-probe
 RUN go get github.com/grpc-ecosystem/grpc-health-probe
 WORKDIR /code
 COPY go.mod /code/go.mod
@@ -16,12 +16,12 @@ RUN go build -ldflags "-s -w" -o {{ app_name }}-go {{ app_name }}.go
 # 直接使用可执行文件构造镜像
 FROM {{ cross_compiling }}alpine:3.12.2 as build_img
 # 打包镜像
-COPY --from=build_bin /go/bin/grpc_health_probe .
-RUN chmod +x /grpc_health_probe
+COPY --from=build_bin /go/bin/grpc-health-probe .
+RUN chmod +x /grpc-health-probe
 COPY --from=build_bin /code/{{ app_name }}-go .
 RUN chmod +x /{{ app_name }}-go
 EXPOSE 5000
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "grpc_health_probe","-addr=:5000" ]
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "grpc-health-probe","-addr=:5000" ]
 ENTRYPOINT [ "/{{ app_name }}-go"]
 
 # 使用upx压缩可执行文件
@@ -37,10 +37,10 @@ RUN upx --best --lzma -o {{ app_name }} {{ app_name }}-go
 # 使用压缩过的可执行文件构造镜像
 FROM {{ cross_compiling }}alpine:3.12.2 as build_upximg
 # 打包镜像
-COPY --from=build_bin /go/bin/grpc_health_probe .
-RUN chmod +x /grpc_health_probe
+COPY --from=build_bin /go/bin/grpc-health-probe .
+RUN chmod +x /grpc-health-probe
 COPY --from=upx /code/{{ app_name }} .
 RUN chmod +x /{{ app_name }}
 EXPOSE 5000
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "grpc_health_probe","-addr=:5000" ]
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "grpc-health-probe","-addr=:5000" ]
 ENTRYPOINT [ "/{{ app_name }}"]
