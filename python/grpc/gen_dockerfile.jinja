@@ -8,7 +8,7 @@ RUN mkdir /code/{{ app_name }}
 COPY requirements.txt /code/requirements.txt
 RUN python -m pip --no-cache-dir install -r requirements.txt --target {{ app_name }}
 
-FROM golang:latest-alpine as build_grpc-health-probe
+FROM {{ cross_compiling }}golang:latest-alpine as build_grpc-health-probe
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.io
 # 停用cgo
