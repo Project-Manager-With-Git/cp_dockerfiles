@@ -1,22 +1,17 @@
-# 构建可执行文件
-FROM {{cross_compiling }}golang:{{ golang_version }} as build_bin
+# 构造可执行文件
+FROM {{ cross_compiling }}golang:{{ golang_version }}-alpine as build_bin
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.io
-# 启用cgo
-ENV CGO_ENABLED=1
-# 安装针对glibc的开发工具链
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
-RUN apk update && apk --no-cache add build-base && rm -rf /var/cache/apk/* 
+# 停用cgo
+ENV CGO_ENABLED=0
 WORKDIR /code
-# 复制依赖列表
 COPY go.mod /code/go.mod
 COPY go.sum /code/go.sum
-# 复制源码
+# 添加源文件
 COPY {{ app_name }}.go /code/{{ app_name }}.go
-# 编译可执行文件
 RUN go build -ldflags "-s -w" -o {{ app_name }}-go {{ app_name }}.go
 
-# 压缩可执行文件
+# 使用upx压缩可执行文件
 FROM {{ cross_compiling }}alpine:3.11 as upx
 WORKDIR /code
 # 安装upx
@@ -34,16 +29,11 @@ ENV CGO_ENABLED=0
 # 安装grpc-health-probe
 RUN go get github.com/grpc-ecosystem/grpc-health-probe
 
-# 构造镜像
-FROM {{ cross_compiling }}debian:buster-slim as build_img
-# 安装curl
-RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
-RUN apt update -y && apt install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
-# 部署可执行文件
+# 使用压缩过的可执行文件构造镜像
+FROM {{ cross_compiling }}scratch as build_img
+# 打包镜像
 COPY --from=build_grpc-health-probe /go/bin/grpc-health-probe .
-RUN chmod +x /grpc-health-probe
 COPY --from=upx /code/{{ app_name }} .
-RUN chmod +x /{{ app_name }}
 EXPOSE 5000
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "/grpc-health-probe","-addr=:5000" ]
 ENTRYPOINT [ "/{{ app_name }}"]

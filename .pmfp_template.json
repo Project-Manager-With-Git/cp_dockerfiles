@@ -63,42 +63,62 @@
         },
         "go_ext_dockerfile": {
             "source": "go/ext_dockerfile.jinja",
-            "description": "golang有cgo依赖的情况下使用",
+            "description": "golang有cgo依赖的情况下使用,使用debian:buster-slim作为基镜像,且使用upx压缩",
             "default_path": "dockerfile"
         },
         "go_pure_dockerfile": {
             "source": "go/pure_dockerfile.jinja",
-            "description": "golang没有cgo依赖的情况下使用",
+            "description": "golang没有cgo依赖的情况下使用,使用scratch作为基镜像,且使用upx压缩",
             "default_path": "dockerfile"
         },
         "go_ext_alpine_dockerfile": {
             "source": "go/ext_alpine_dockerfile.jinja",
-            "description": "golang有cgo依赖但需要alpine的情况下使用",
+            "description": "golang有cgo依赖但需要alpine的情况下使用,使用alpine作为基镜像,且使用upx压缩",
             "default_path": "dockerfile"
         },
         "go_pure_alpine_dockerfile": {
             "source": "go/pure_alpine_dockerfile.jinja",
-            "description": "golang没有cgo依赖但需要alpine的情况下使用",
+            "description": "golang没有cgo依赖但需要alpine的情况下使用,使用alpine作为基镜像,且使用upx压缩",
             "default_path": "dockerfile"
         },
         "go_http_ext_dockerfile": {
             "source": "go/http/ext_dockerfile.jinja",
-            "description": "golang有cgo依赖时用的dockerflie,会暴露5000端口并用curl对/ping接口实行健康检查",
+            "description": "golang有cgo依赖时用的dockerflie,会暴露5000端口并用curl对/ping接口实行健康检查,使用debian:buster-slim作为基镜像,且使用upx压缩",
             "default_path": "dockerfile"
         },
         "go_http_pure_dockerfile": {
             "source": "go/http/pure_dockerfile.jinja",
-            "description": "golang没有cgo依赖时用的dockerflie,会暴露5000端口并用curl对/ping接口实行健康检查",
+            "description": "golang没有cgo依赖时用的dockerflie,会暴露5000端口并用curl对/ping接口实行健康检查,使用alpine作为基镜像,且使用upx压缩",
             "default_path": "dockerfile"
         },
         "go_grpc_ext_dockerfile": {
             "source": "go/grpc/ext_dockerfile.jinja",
-            "description": "golang有cgo依赖时用的dockerflie,会暴露5000端口并用grpc_health_probe对health接口实行健康检查",
+            "description": "golang有cgo依赖时用的dockerflie,会暴露5000端口并用grpc_health_probe对health接口实行健康检查,使用debian:buster-slim作为基镜像,且使用upx压缩",
             "default_path": "dockerfile"
         },
         "go_grpc_pure_dockerfile": {
             "source": "go/grpc/pure_dockerfile.jinja",
-            "description": "golang没有cgo依赖时用的dockerflie,会暴露5000端口并用grpc_health_probe对health接口实行健康检查",
+            "description": "golang有cgo依赖时用的dockerflie,会暴露5000端口并用grpc_health_probe对health接口实行健康检查,使用alpine作为基镜像,且使用upx压缩",
+            "default_path": "dockerfile"
+        },
+        "go_grpc_pure_mini_dockerfile": {
+            "source": "go/grpc/pure_mini_dockerfile.jinja",
+            "description": "golang没有cgo依赖时用的dockerflie,会暴露5000端口并用grpc_health_probe对health接口实行健康检查,使用scratch作为基镜像,且使用upx压缩",
+            "default_path": "dockerfile"
+        },
+        "cxx_grpc_alpine_dockerfile":{
+            "source": "cxx/grpc/alpine_dockerfile.jinja",
+            "description": "c++纯静态可执行程序的镜像模版,使用alpine作为基镜像",
+            "default_path": "dockerfile"
+        },
+        "cxx_grpc_mini_dockerfile":{
+            "source": "cxx/grpc/mini_dockerfile.jinja",
+            "description": "c++纯静态可执行程序的镜像模版,使用scratch作为基镜像,且使用upx压缩,注意upx很大可能压缩会报错.",
+            "default_path": "dockerfile"
+        },
+        "cxx_grpc_scratch_dockerfile":{
+            "source": "cxx/grpc/scratch_dockerfile.jinja",
+            "description": "c++纯静态可执行程序的镜像模版,使用scratch作为基镜像",
             "default_path": "dockerfile"
         }
     }

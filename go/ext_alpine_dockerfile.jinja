@@ -12,12 +12,6 @@ COPY go.sum /code/go.sum
 COPY {{ app_name }}.go /code/{{ app_name }}.go
 RUN go build -ldflags "-s -w" -o {{ app_name }}-go {{ app_name }}.go
 
-# 直接使用可执行文件构造镜像
-FROM {{ cross_compiling }}alpine:3.12.2 as build_img
-COPY --from=build_bin /code/{{ app_name }}-go .
-RUN chmod +x /{{ app_name }}-go
-ENTRYPOINT [ "/{{ app_name }}-go"]
-
 # 使用upx压缩可执行文件
 FROM {{ cross_compiling }}alpine:3.11 as upx
 WORKDIR /code
@@ -29,7 +23,7 @@ RUN upx --best --lzma -o {{ app_name }} {{ app_name }}-go
 
 
 # 使用压缩过的可执行文件构造镜像
-FROM {{ cross_compiling }}alpine:3.12.2 as build_upximg
+FROM {{ cross_compiling }}alpine:3.12.2 as build_img
 COPY --from=upx /code/{{ app_name }} .
 RUN chmod +x /{{ app_name }}
 ENTRYPOINT [ "/{{ app_name }}"]
