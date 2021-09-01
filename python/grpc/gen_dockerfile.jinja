@@ -1,4 +1,4 @@
-FROM {{ cross_compiling }}python:{{ python_version }}-slim-buster as install_requirements
+FROM {{ cross_compiling }}python:slim-buster as install_requirements
 RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 RUN apt update -y && apt install -y --no-install-recommends build-essential && rm -rf /var/lib/apt/lists/*
 COPY pip.conf /etc/pip.conf
@@ -16,7 +16,7 @@ ENV CGO_ENABLED=0
 # 安装grpc-health-probe
 RUN go get github.com/grpc-ecosystem/grpc-health-probe
 
-FROM {{ cross_compiling }}python:{{ python_version }}-slim-buster as build_img
+FROM {{ cross_compiling }}python:slim-buster as build_img
 # 打包镜像
 COPY --from=build_grpc-health-probe /go/bin/grpc-health-probe /code
 RUN chmod +x /code/grpc-health-probe

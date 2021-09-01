@@ -1,5 +1,5 @@
 # 构造可执行文件
-FROM {{ cross_compiling }}golang:{{ golang_version }}-alpine as build_bin
+FROM {{ cross_compiling }}golang:alpine as build_bin
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.io
 # 停用cgo
@@ -21,7 +21,7 @@ COPY --from=build_bin /code/{{ app_name }}-go .
 RUN upx --best --lzma -o {{ app_name }} {{ app_name }}-go
 
 # 编译获得grpc-health-probe
-FROM {{ cross_compiling }}golang:1.17.0-buster as build_grpc-health-probe
+FROM {{ cross_compiling }}golang:buster as build_grpc-health-probe
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.io
 # 停用cgo

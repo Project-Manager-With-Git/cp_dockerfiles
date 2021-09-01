@@ -1,5 +1,5 @@
 # 构造可执行文件
-FROM {{ cross_compiling }}golang:{{ golang_version }}-alpine as build_bin
+FROM {{ cross_compiling }}golang:alpine as build_bin
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.io
 # 安装针对glibc的开发工具链
@@ -23,7 +23,7 @@ RUN upx --best --lzma -o {{ app_name }} {{ app_name }}-go
 
 
 # 使用压缩过的可执行文件构造镜像
-FROM {{ cross_compiling }}alpine:3.12.2 as build_img
+FROM {{ cross_compiling }}alpine:latest as build_img
 COPY --from=upx /code/{{ app_name }} .
 RUN chmod +x /{{ app_name }}
 ENTRYPOINT [ "/{{ app_name }}"]

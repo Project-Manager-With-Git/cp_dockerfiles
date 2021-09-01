@@ -1,11 +1,11 @@
-FROM {{ cross_compiling }}python:{{ python_version }}-alpine as build_bin
+FROM {{ cross_compiling }}python:alpine as build_bin
 WORKDIR /code
 RUN mkdir /code/{{ app_name }}
 # 复制源文件
 COPY {{ app_name }} /code/{{ app_name }}/
 RUN python -m zipapp -p "/usr/bin/env python3" {{ app_name }}
 
-FROM {{ cross_compiling }}python:{{ python_version }}-alpine as build_img
+FROM {{ cross_compiling }}python:alpine as build_img
 COPY pip.conf /etc/pip.conf
 RUN pip --no-cache-dir install --upgrade pip
 WORKDIR /code

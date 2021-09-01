@@ -1,5 +1,5 @@
 # 构建可执行文件
-FROM {{cross_compiling }}golang:{{ golang_version }} as build_bin
+FROM {{cross_compiling }}golang:buster as build_bin
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.io
 # 启用cgo

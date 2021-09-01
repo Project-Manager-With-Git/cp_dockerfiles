@@ -1,4 +1,4 @@
-FROM {{ cross_compiling }}python:{{ python_version }}-alpine as build_bin
+FROM {{ cross_compiling }}python:alpine as build_bin
 COPY pip.conf /etc/pip.conf
 RUN pip --no-cache-dir install --upgrade pip
 WORKDIR /code
@@ -10,7 +10,7 @@ RUN rm -rf {{ app_name }}/*.dist-info
 COPY {{ app_name }} /code/{{ app_name }}/
 RUN python -m zipapp -p "/usr/bin/env python3" {{ app_name }}
 
-FROM {{ cross_compiling }}python:{{ python_version }}-alpine as build_img
+FROM {{ cross_compiling }}python:alpine as build_img
 WORKDIR /code
 COPY --from=build_bin /code/{{ app_name }}.pyz /code
 CMD ["python" ,"{{ app_name }}.pyz"]

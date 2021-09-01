@@ -10,14 +10,6 @@
         "app_name": {
             "description": "服务应用名,默认为项目名称",
             "default": "{{ project_name }}"
-        },
-        "python_version": {
-            "description": "python版本",
-            "default": "{{ python_version }}"
-        },
-        "golang_version": {
-            "description": "golang版本",
-            "default": "{{ golang_version }}"
         }
     },
     "components": {

@@ -13,7 +13,7 @@ RUN cmake -DCMAKE_BUILD_TYPE=Release ..
 RUN cmake --build .
 
 # 编译获得grpc-health-probe
-FROM {{ cross_compiling }}golang:1.17.0-buster as build_grpc-health-probe
+FROM {{ cross_compiling }}golang:buster as build_grpc-health-probe
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.io
 # 停用cgo

@@ -1,5 +1,5 @@
 # 构造可执行文件
-FROM {{ cross_compiling }}golang:{{ golang_version }}-alpine as build_bin
+FROM {{ cross_compiling }}golang:alpine as build_bin
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.io
 # 静态编译
